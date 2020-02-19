@@ -1,0 +1,91 @@
+#include "student.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+Student *new_student(const char name[], unsigned int id, float shoe_size) {
+  Student *s1 = NULL;
+  int str_length;
+  int student_size;
+  if (name != NULL) {
+    str_length = strlen(name) + 1;
+    student_size = sizeof(*s1);
+    s1 = malloc(student_size);
+    s1->name = malloc(str_length);
+    strcpy(s1->name, name);
+    s1->id = id;
+    s1->shoe_size = shoe_size;
+  } else {
+    s1->name = malloc(1);
+    student_size = sizeof(*s1);
+    s1 = malloc(student_size);
+    strcpy(s1->name, "");
+    s1->id = id;
+    s1->shoe_size = shoe_size;
+  }
+  return s1;
+}
+
+unsigned int has_id(Student *const student, unsigned int id) {
+  if (student == NULL)
+    return 0;
+
+  if (student->id != id)
+    return 0;
+  return 1;
+}
+
+int has_name(Student *const student, const char name[]) {
+  if (student == NULL || name == NULL)
+    return 0;
+
+  if (student->name != NULL) {
+    if (strcmp(student->name, name) != 0)
+      return 0;
+  }
+  return 1;
+}
+
+unsigned int get_id(Student *const student) {
+  if (student == NULL)
+    return 0;
+  return student->id;
+}
+
+float get_shoe_size(Student *const student) {
+  if (student == NULL)
+    return 0;
+  return student->shoe_size;
+}
+
+void change_shoe_size(Student *const student, float new_shoe_size) {
+  if (student == NULL || new_shoe_size == NULL)
+    return;
+
+  student->shoe_size = new_shoe_size;
+}
+
+void change_name(Student *const student, const char new_name[]) {
+  if (student == NULL)
+    return;
+  if (student->name != NULL) {
+    if (new_name == NULL) {
+      student->name = malloc(1);
+      strcpy(student->name, "");
+    } else {
+      student->name = malloc(strlen(new_name) + 1);
+      strcpy(student->name, new_name);
+    }
+  }
+}
+
+void copy_student(Student *student1, Student *const student2) {
+  if (student1 == NULL || student2 == NULL)
+    return;
+
+  else if (student1->name != NULL && student2->name != NULL)
+    student1->name = malloc(strlen(student2->name));
+  strcpy(student1->name, student2->name);
+  student1->id = student2->id;
+  student1->shoe_size = student2->shoe_size;
+}

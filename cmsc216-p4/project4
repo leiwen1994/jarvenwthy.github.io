@@ -1,0 +1,73 @@
+/*name:Jiawen Lei
+  director ID: jlei4
+  UID: 115694569
+
+
+*/
+#include "student.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+Student new_student(const char name[], unsigned int id, float shoe_size) {
+  Student student;
+  if (name != NULL) {
+    strcpy(student.name, name);
+  } else
+    strcpy(student.name, "");
+  student.id = id;
+  student.shoe_size = shoe_size;
+  return student;
+}
+
+void init_student(Student *const student, const char name[], unsigned int id,
+                  float shoe_size) {
+  Student s1;
+  if (student == NULL)
+    return;
+
+  if (name != NULL) {
+    strcpy(s1.name, name);
+
+  } else
+    strcpy(s1.name, "");
+  s1.id = id;
+  s1.shoe_size = shoe_size;
+  *student = s1;
+}
+
+unsigned int has_id(Student student, unsigned int id) {
+  if (student.id != id)
+    return 0;
+  return 1;
+}
+
+int has_name(Student student, const char name[]) {
+  if (name == NULL)
+    return 0;
+  if (strcmp(student.name, name) != 0)
+    return 0;
+  return 1;
+}
+
+unsigned int get_id(Student student) { return student.id; }
+
+float get_shoe_size(Student student) { return student.shoe_size; }
+
+Student change_shoe_size(Student student, float new_shoe_size) {
+  Student s1;
+  strcpy(s1.name, student.name);
+  s1.id = student.id;
+  s1.shoe_size = new_shoe_size;
+  return s1;
+}
+void change_name(Student *const student, const char new_name[]) {
+  if (student == NULL)
+    return;
+
+  if (new_name == NULL) {
+    strcpy(student->name, "");
+  } else {
+    strcpy(student->name, new_name);
+  }
+}

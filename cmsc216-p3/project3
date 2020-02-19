@@ -1,0 +1,191 @@
+/*
+Name: Jiawen Lei
+Directer ID: jlei4
+Uid: 115694569
+section: 0107
+description:the first faction is check if the opcode is 14 or nor, if
+it is 14 then it does not have to store reg2 and 3 and extension, if
+not it will store everything. The second faction is just print the word
+by using the factions which already completed. The third one is checking if
+the varaibles is valid and store into a array and print. The last one
+is checking if opcode is certain number then have to check other elements
+such as reg1,reg2,or extension to make a validly aurgument. More details will
+be on each code.
+*/
+#include "machine.h"
+#include <stdio.h>
+
+int assemble(unsigned short opcode, unsigned short reg1, unsigned short reg2,
+             unsigned short reg3, unsigned short extension,
+             unsigned int addr_constant, Machine_word *const word) {
+  /*make unsigned temp local varaibles*/
+  unsigned int opct = opcode;
+  unsigned int reg1t = reg1;
+  unsigned int reg2t = reg2;
+  unsigned int reg3t = reg3;
+  unsigned int extensiont = extension;
+  /*checking if the word is valid*/
+  if (word == NULL) {
+    return 0;
+  }
+  /*if opcode is 14 or LI then the word will store opcode,reg1 and
+   * addr_constant*/
+  if (opcode == LI) {
+    /*since word take 32 bits opcode take 5 bits and reg1 take 4 bits so the
+    word should move left 5 and 4 bits to get the value. eg.
+    0001_1111_1010_1111_1111*/
+    opct <<= 27;
+    reg1t <<= 23;
+    *word = opct + reg1t + addr_constant;
+    /*if not, it will store everything*/
+  } else {
+    /*same thing as explained above but expect 14(or LI) other should add
+     * everything*/
+    opct <<= 27;
+    reg1t <<= 23;
+    reg2t <<= 19;
+    reg3t <<= 15;
+    extensiont <<= 12;
+    *word = opct + reg1t + reg2t + reg3t + extensiont + addr_constant;
+  }
+  return 1;
+}
+
+int print_instruction(Machine_word instruction) {
+  /*opcode move right 27 to get 4 digit ex: 1010*/
+  unsigned int op = instruction >> 27;
+  /*r1 r2 r3 do the same thing except they have to & 15, because 15 is 1111,
+   * when using &, it will get rid off all those unexcept value. ex: 0100_0101,
+   * we want 0101 only so we & 15 to get rid off the most-left*/
+  unsigned int r1 = (instruction >> 23) & 15;
+  unsigned int r2 = (instruction >> 19) & 15;
+  unsigned int r3 = (instruction >> 15) & 15;
+  /*since extension only has 3 digit, so it will & 7 ex:000_111*/
+  unsigned int ext = (instruction >> 12) & 7;
+  /*since address has 12 bits so it will have 12 "1" which is equal to 4095*/
+  unsigned int add = instruction & 4095;
+  /*if opc is 14, it does not have extension, so the address will up to 15 bits
+   * and it equal to 32767*/
+  unsigned int cont = instruction & 32767;
+  /*check if the instruction is valid*/
+  if (!valid_instruction(instruction))
+    return 0;
+  /*print opcode*/
+  if (op == 0)
+    printf("sys");
+  if (op == 1)
+    printf("add");
+  if (op == 2)
+    printf("sub");
+  if (op == 3)
+    printf("mul");
+  if (op == 4)
+    printf("div");
+  if (op == 5)
+    printf("rem");
+  if (op == 6)
+    printf("shl");
+  if (op == 7)
+    printf("shr");
+  if (op == 8)
+    printf("neg");
+  if (op == 9)
+    printf("cmp");
+  if (op == 10)
+    printf("br");
+  if (op == 11)
+    printf("and");
+  if (op == 12)
+    printf("or");
+  if (op == 13)
+    printf("not");
+  if (op == 14)
+    printf("li");
+  if (op == 15)
+    printf("lw");
+  if (op == 16)
+    printf("sw");
+  if (op == 17)
+    printf("mov");
+  /*if opcode is 0 or 9 it will pring the extension number*/
+  if (op == 0 || op == 9)
+    printf(" %u", ext);
+  /*if opcode is greater than 1 and less than 7, or is 11 or 12 will pring
+   * r1,r2,r3*/
+  if ((op >= 1 && op <= 7) || op == 11 || op == 12)
+    printf("      R%u   R%u   R%u", r1, r2, r3);
+  /*if its 8, 9 13 or 17 it will only print r1 and r2*/
+  if (op == 8 || op == 9 || op == 13 || op == 17)
+    printf("      R%u   R%u", r1, r2);
+  /*if its 0 14 15 16, it will print r1*/
+  if (op == 0 || (op >= 14 && op <= 16))
+    printf("      R%u", r1);
+  /*if the op is 10 or 15 or 16 it will print the address,and the number has to
+   * be 5 digits*/
+  if (op == 10 || op == 15 || op == 16)
+    printf(" %05u", add);
+  /* op is 14, then do not print the address instead print the addr_constant*/
+  if (op == 14)
+    printf(" %u", cont);
+  return 1;
+}
+int disassemble(const Machine_word program[], unsigned int program_size,
+                unsigned int data_segment_size) {
+  int i;
+  /*check if the varaibles is valid*/
+  if (program_size < 1 || program_size > 1024 ||
+      data_segment_size >= program_size || program == NULL)
+    return 0;
+  /*print the instructions*/
+  for (i = 0; i < program_size; i++) {
+    if (i < program_size - data_segment_size) {
+      if (valid_instruction(program[i])) {
+        print_instruction(program[i]);
+        printf("\n");
+      } else
+        return 0;
+      /*print the data*/
+    } else {
+      printf("%08x", program[i]);
+      printf("\n");
+    }
+  }
+  return 1;
+}
+int valid_instruction(Machine_word word) {
+  /*did same thing i explained above*/
+  unsigned int op = word >> 27;
+  unsigned int r1 = (word >> 23) & 15;
+  unsigned int r2 = (word >> 19) & 15;
+  unsigned int r3 = (word >> 15) & 15;
+  unsigned int ext = (word >> 12) & 7;
+  unsigned int add = word & 4095;
+  /*test all opcode and elements to see if are valid*/
+  if (op > 17)
+    return 0;
+
+  if (r1 > 11 || r2 > 11 || r3 > 11)
+    return 0;
+
+  if (op == 0)
+    if (ext > 2)
+      return 0;
+
+  if (op == 9)
+    if (ext > 5)
+      return 0;
+
+  if (op == 10 || op == 15 || op == 16)
+    if (add % 4 != 0)
+      return 0;
+
+  if (op != 10 && op != 16) {
+    if (op == 0) {
+      if (ext == 2 && r1 == 0)
+        return 0;
+    } else if (op != 0 && r1 == 0) {
+      return 0;
+    }
+  }
+  return 1;
+}
