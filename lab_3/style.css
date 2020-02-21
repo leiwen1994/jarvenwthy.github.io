@@ -7,7 +7,7 @@ html, body {
 
 html {
   font-size: 10px;
-  background-color: #a9a9a9;
+  background-color: #518fd6;
 }
 
 body {
@@ -19,12 +19,12 @@ body {
 /* || typography */
 
 h1, h2, h3 {
-  font-family: 'Cinzel Decorative', cursive;
-  color: #2a2a2a;
+  font-family: 'Righteous', cursive;
+  color:#2a2a2a;
 }
 
 p, input, li {
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Indie Flower', sans-serif;
   color: #2a2a2a;
 }
 
@@ -57,16 +57,17 @@ header {
 }
 
 body > * {
-  background-color: green;
+  background-color: blue;
   padding: 1%;
 }
 
 main, header, nav, article, aside, footer, section {
-  background-color: rgba(0,255,0,0.5);
+  background-color: rgba(39, 23, 184, 0.5);
   padding: 1%;
 }
 
 h1 {
+  font-family: 'Righteous', cursive;
   flex: 5;
   text-transform: uppercase;
 }
@@ -136,3 +137,4 @@ aside img {
 footer {
   margin-top: 10px;
 }
+
