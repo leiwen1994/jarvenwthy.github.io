@@ -7,7 +7,7 @@ html, body {
 
 html {
   font-size: 10px;
-  background-color: #518fd6;
+  background-color: #2b6bb4;
 }
 
 body {
@@ -57,7 +57,7 @@ header {
 }
 
 body > * {
-  background-color: blue;
+  background-color: rgb(50, 50, 156);
   padding: 1%;
 }
 
