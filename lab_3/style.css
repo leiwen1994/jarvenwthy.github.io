@@ -115,7 +115,7 @@ main {
 }
 
 article, section {
-  flex: 4;
+  flex: 5;
 }
 
 aside {
