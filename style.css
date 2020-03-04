@@ -1,50 +1,58 @@
-/* || General setup */
-
-html, body {
-    margin: 0;
-    padding: 0;
-  }
-  
-  html {
+    html {
     font-size: 10px;
-    background-color: #FFC470;
+    background-color: rgb(148, 96, 24);
   }
   
   body {
     width: 100%;
     height:100%;
     margin: 0 auto;
+    background-color:rgb(183, 179, 196);
+    padding: 1%;
     border-radius: 4px;
   }
   
-  /* || typography */
-  
-  h1, h2, h3 {
-    font-family: 'Trade Winds', ;
-    color:#2a2a2a;
-  }
   
   .wrapper{
-    height:auto;
-    width: 100%;
-    padding: 10;
-    margin: 5;
+    flex-direction: column;
     display: flex;
-    flex-flow: row wrap;
+    align-items: center;
+
   }
   .container{
-    border-style: dashed solid;
-      height:auto;
-      width:100%;
-      flex-flow:row wrap;
-      padding: 0;
-      margin: 0;
-      display:flex;
+    flex-flow: row wrap;
+    display: flex;
+    max-width: 960px;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+  .one{
+    padding: 20px;
+    text-align: left;
+    flex: 0 1 auto;
+    width: 165px;
+  }
+  .one p{
+      text-align: center;
+      display: inline-block;
+      border: 10px solid transparent;
+      background-color: rgb(98, 107, 98);
+      flex:0 1 auto;
+      font-size: 20px;
+  
+  }
+  .two{
+    flex-direction: row;
+    background-color: rgb(106, 106, 112);
+    text-align: center;
+    flex: 0 2 auto;
+    padding: 10px;
   }
   h1 {
     font-size: 8rem;
     text-align: center;
-    text-shadow: 2px 2px 10px black;
+    text-shadow: 2px 2px 10px rgb(133, 26, 26);
   }
   
   h2 {
@@ -63,46 +71,15 @@ html, body {
   /* || header layout */
   
   .header {
-    height:5%;
-    width:100%;
-    margin: 0;
-    padding: 0;
+    padding: 10px;
     margin-bottom: 10px;
     display: flex;
-    flex-flow: row wrap;
-
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(128, 128, 143);
   }
   
-  body > * {
-    background-color:#F4F1FD;
-    padding: 1%;
-  }
-  
-  main, header, nav, article, aside, footer, section {
-    background-color: rgba(39, 23, 184, 0.5);
-    padding: 1%;
-  }
-  
-  h1 {
-    font-family: 'Righteous', cursive;
-    flex: 5;
-    text-transform: uppercase;
-  }
-  
-  header img {
-    display: block;
-    height: 60px;
-    padding-top: 20.15px;
-  }
-  aside {
-    flex: 2;
-    margin-left: 10px;
-    padding: 1%;
-    font-size: 2rem;
-    display: flex;
-    background-color: white;
-  }
-  
-
   
   
