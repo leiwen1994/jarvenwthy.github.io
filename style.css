@@ -11,8 +11,6 @@
     padding: 1%;
     border-radius: 4px;
   }
-  
-  
   .wrapper{
     flex-direction: column;
     display: flex;
@@ -43,6 +41,7 @@
   
   }
   .two{
+    border-style: dotted;
     flex-direction: row;
     background-color: rgb(106, 106, 112);
     text-align: center;
@@ -54,18 +53,31 @@
     text-align: center;
     text-shadow: 2px 2px 10px rgb(133, 26, 26);
   }
-  
+  p{
+    font-size: 1.6rem;
+    line-height: inherit;
+  }
   h2 {
     font-size: 3rem;
-    text-align: center;
+    text-align: left;
   }
   
-  h3 {
+  li .h3 {
+    float: left;
+    text-align: left;
     font-size: 2.2rem;
+    list-style: none;
   }
-  li {
+
+  ul {
+    
     font-size: 1.6rem;
-    line-height: 1.5;
+    line-height: 0.9;
+  }
+  ol .li{
+    padding: 0;
+    margin: 0;
+    display: inline;
   }
   
   /* || header layout */
