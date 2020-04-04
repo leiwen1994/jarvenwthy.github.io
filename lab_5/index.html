@@ -9,9 +9,9 @@
 <body>
   <div class="container">
     <div class="wrapper">
-      <div class="header">Test JSON page</div>
+      <div class="header">Jarven's List of Countries</div>
       <!-- <button class="button" onclick="loadData()">Load Some JSON</button> -->
-      <button class="activate">Click me to replace list
+      <button class="activate" onclick="onClick()">Click me to replace list
         entries</button>
       <div class="content">
       </div>
@@ -265,7 +265,35 @@
       { "name": "Zambia", "code": "ZM" },
       { "name": "Zimbabwe", "code": "ZW" }
     ]
+
     console.log("List of countries in the world", countries);
+    const arr = [];
+    for(let i =0; i< 25;i++){
+      const r = Math.floor(Math.random()*countries.length);
+      if(arr.includes(r)){
+        i--;
+      }else{
+        arr.push(r);
+      }
+    }
+    let list ='';
+    //var li_ = document.createElement('li');
+    //var x =0;
+    arr.forEach(arrItem => {
+        /* 
+        var li_ = document.createElement('li');
+        var li_txt = document.createTextNode(countries[x].name);
+        li_.appendChild(li_txt);
+        ol_items.appendChild(li_);
+        x++;
+        */
+      list+=`<ol><li><b>${arrItem.code}</b>${arrItem.name}</li></ol>`;
+    })
+    // <ol> <> -> what are the two types of lists?
+    // how do we append things to HTML?
+
+    const content = document.querySelector(".content");
+    content.innerHTML = list;
   </script>
 </body>
 
