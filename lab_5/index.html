@@ -273,12 +273,13 @@
       if(arr.includes(r)){
         i--;
       }else{
-        arr.push(r);
+        arr.push(countries[r]);
       }
     }
     let list ='';
     //var li_ = document.createElement('li');
     //var x =0;
+    console.log(arr);
     arr.forEach(arrItem => {
         /* 
         var li_ = document.createElement('li');
@@ -287,7 +288,7 @@
         ol_items.appendChild(li_);
         x++;
         */
-      list+=`<ol><li><b>${arrItem.code}</b>${arrItem.name}</li></ol>`;
+      list+=`<ol><li><b>${arrItem.code}</b> ${arrItem.name}</li></ol>`;
     })
     // <ol> <> -> what are the two types of lists?
     // how do we append things to HTML?
