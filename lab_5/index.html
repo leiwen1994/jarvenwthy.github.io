@@ -276,25 +276,22 @@
         arr.push(countries[r]);
       }
     }
+    const content = document.querySelector(".content");
     let list ='';
-    //var li_ = document.createElement('li');
-    //var x =0;
+    let ol = document.createElement('ol');
+    content.appendChild(ol);
+    console.log(ol);
+   
     console.log(arr);
     arr.forEach(arrItem => {
-        /* 
-        var li_ = document.createElement('li');
-        var li_txt = document.createTextNode(countries[x].name);
-        li_.appendChild(li_txt);
-        ol_items.appendChild(li_);
-        x++;
-        */
-      list+=`<ol><li><b>${arrItem.code}</b> ${arrItem.name}</li></ol>`;
+        //li_.appendChild(li_txt);
+        //ol_items.appendChild(li_);
+      let li = document.createElement('li');
+      list= li + `<b>${arrItem.code}</b> ${arrItem.name}`;
     })
-    // <ol> <> -> what are the two types of lists?
-    // how do we append things to HTML?
-
-    const content = document.querySelector(".content");
-    content.innerHTML = list;
+   
+    content.innerHTML =list;
+    ol.appendChild(list)
   </script>
 </body>
 
