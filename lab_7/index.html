@@ -15,7 +15,7 @@
       crossorigin=""
     ></script>
     <style>
-      #map1{
+      #map1 {
         height: 480px;
         width: 640px;
       }
@@ -27,29 +27,50 @@
       <div class="wrapper">
         <div class="header">Frontend Libraries: Maps Lab</div>
         <div class="content">
-          <div id="map1">
-
-          </div>
+          <div id="map1"></div>
         </div>
         <div class="footer">Make some markers work!</div>
       </div>
     </div>
     <script>
-        const mymap = L.map('map1').setView([38.9869, -76.9426], 13);
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', 
+      const mymap = L.map("map1").setView([38.9869, -76.9426], 13);
+      L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
         {
-         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset: -1,
-            accessToken: 'pk.eyJ1IjoiZXJpY25ndXllbjk4IiwiYSI6ImNrOGdodmlzbDAxdGozaW85OTVsN2VmMngifQ.U_gmqOqUXoGHkTu9wuEpBQ'
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: "mapbox/streets-v11",
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken:
+            "pk.eyJ1IjoiZXJpY25ndXllbjk4IiwiYSI6ImNrOGdodmlzbDAxdGozaW85OTVsN2VmMngifQ.U_gmqOqUXoGHkTu9wuEpBQ",
         }
       ).addTo(mymap);
       const mark1 = L.marker([38.988251, -76.941577]).addTo(mymap);
       const str1 = "<b>Hornbake Library</b>";
       mark1.bindPopup(str1).openPopup();
-      const foodIns = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json';
+      const foodIns =
+        "https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json";
+      let longLat = [];
+      let name = [];
+
+      fetch(foodIns)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (jsonData) {
+          for (let i = 0; i < 3; i++) {
+            longLat[i] = jsonData[
+              i + 3
+            ].geocoded_column_1.coordinates.reverse();
+            name[i] = jsonData[i + 3].name;
+          }
+          for (let j = 0; j < 3; j++) {
+            const mark2 = L.marker(longLat[j]).addTo(mymap);
+            mark2.bindPopup(name[j]);
+          }
+        });
     </script>
   </body>
 </html>
